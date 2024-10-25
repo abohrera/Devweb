@@ -1,29 +1,32 @@
 const express = require("express")
 const router = express.Router()
-const usersArray = [
-    { id: 1, firstName: "John", lastName: "Doe", role: "admin" },
-    { id: 2, firstName: "Jane", lastName: "Smith", role: "user" },
-    { id: 3, firstName: "Alice", lastName: "Johnson", role: "moderator" },
-    { id: 4, firstName: "Bob", lastName: "Brown", role: "user" },
-    { id: 5, firstName: "Charlie", lastName: "Davis", role: "admin" },
-]
+const db = require("../database.js")
+
 module.exports = router
 
-//GET : LIRE un utilisateur parmis tous les utilisateurs
+//GET METHOD
 router.get("/users", (req, res) => {
-    res.json(usersArray)
+    db.all("SELECT * FROM users", (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message })
+            return
+        }
+        res.json({
+            data: rows,
+        })
+    })
 })
 
 //POST METHOD
-router.post("/", (req, res) => {
+router.post("/users", (req, res) => {
 })   
 
 //PUT METHOD
-router.put("/id", (req, res) => {
+router.put("/:id", (req, res) => {
 })   
 
 //DELETE METHOD
-router.post("/id", (req, res) => {
+router.post("/:id", (req, res) => {
 })   
 
 

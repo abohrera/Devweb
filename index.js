@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const usersRouter = require("./routes/users.js")
+const sqlite3 = require("sqlite3").verbose()
+const db = require("./database.js")
 
 // MIDDLEWARE
 app.use(express.json());
