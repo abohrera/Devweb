@@ -1,25 +1,15 @@
 const express = require("express")
 const router = express.Router()
 const db = require("../database.js")
+const { getAllUsers, createNewUser } = require("../controllers/usersControllers.js")
 
 module.exports = router
 
 //GET METHOD
-router.get("/users", (req, res) => {
-    db.all("SELECT * FROM users", (err, rows) => {
-        if (err) {
-            res.status(500).json({ error: err.message })
-            return
-        }
-        res.json({
-            data: rows,
-        })
-    })
-})
+router.get("/users", getAllUsers)
 
 //POST METHOD
-router.post("/users", (req, res) => {
-})   
+router.post("/users", createNewUser)   
 
 //PUT METHOD
 router.put("/:id", (req, res) => {
