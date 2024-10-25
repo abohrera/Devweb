@@ -14,8 +14,6 @@ app.get("/", (req, res) => {
 		msg: "Welcome to my users API !", 
 })
 })
-
-
 app.listen(port, () => {
 	console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
 });
