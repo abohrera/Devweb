@@ -7,15 +7,36 @@ app.listen(port, () => {
 	console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
 });
 
-app.put("/", (req, res) => {
+app.put("/:id", (req, res) => {
+		// récupérer toutes les données qui arrivent dans le corps de la requête (body)
+		const { firstName, lastName } = req.body
+		const id = parseInt(req.params.id)
+		// trouve son index, verifier si le userIndex est positive
+		const userIndex = users.findIndex((user) => user.id === id)
+			// utilisateur non trouvé
+			if (userIndex < 0)
+				return res.status(404).json({ msg: "utilisateur non trouvé" })
+		// si el est trouvé, nous vérifions quelles valeurs ont été envoyées
+		if (firstName) users[userIndex].firstName = firstName
+		if (lastName) users[userIndex].lastName = lastName
 	res.json({
-		msg: "hello rest api ici le put",
+		msg: "utilisateur mis à jour",
+		user: users[userIndex],
 	})
-    
+
 })
-app.delete("/", (req, res) => {
+app.delete("/:id", (req, res) => {
+	const id = parseInt(req.params.id)
+		// trouve son index, verifier si le userIndex est positive
+		const userIndex = users.findIndex((user) => user.id === id)
+
+		// utilisateur non trouvé
+		if (userIndex < 0)
+			return res.status(404).json({ msg: "utilisateur non trouvé" })
+		// utilisateur trouvé
+		users.splice(userIndex, 1)
 	res.json({
-		msg: "hello rest api ici le put",
+		msg: "utilisateur supprimé",
 	})
 })
 const users = [
@@ -25,6 +46,22 @@ const users = [
 	{ id: 4, firstName: "Bob", lastName: "Brown", role: "user" },
 	{ id: 5, firstName: "Charlie", lastName: "Davis", role: "admin" },
 ]
+
+// GET : LIRE un utilisateur parmis tous les utilisateurs
+app.get("/:id", (req, res) => {
+	const id = parseInt(req.params.id)
+
+	// trouve son index, verifier si le userIndex est positive
+	const userIndex = users.findIndex((user) => user.id === id)
+
+	// utilisateur non trouvé
+	if (userIndex < 0)
+		return res.status(404).json({ msg: "utilisateur non trouvé" })
+
+	// si elle est trouvée
+
+	res.json(users[userIndex])
+})
 
 // GET : LIRE tous les utilisateurs
 app.get("/", (req, res) => {
