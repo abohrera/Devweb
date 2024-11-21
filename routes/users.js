@@ -16,7 +16,7 @@ router.put("/:id", (req, res) => {
 })   
 
 //DELETE METHOD
-router.post("/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
 })   
 
 
